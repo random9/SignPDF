@@ -36,21 +36,13 @@ using Org.BouncyCastle.Cms;
 using GhostscriptSharp;
 namespace SignPDF
 {
-	/// <summary>
-	/// Description of MainForm.
-	/// </summary>
 	public partial class MainForm : Form
 	{
-		private PDFEncryption PDFEnc = new PDFEncryption();
-		private PdfReader reader = null;
-		private PickBox pbox = new PickBox();
-		// Acrobat objects
-		//Acrobat.CAcroPDDoc pdfDoc;
-		//Acrobat.CAcroPDPage pdfPage;
-		//Acrobat.CAcroRect pdfRect;
-		//Acrobat.CAcroPoint pdfPoint;
-		private string SignLocation=Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF";
-		private string TmpLocation=Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF\\tmp";
+        private PdfReader reader; // = null;
+		private readonly PickBox pbox = new PickBox();
+		
+		private readonly string SignLocation =Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF";
+		private readonly string TmpLocation =Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF\\tmp";
 		
 		public MainForm()
 		{
@@ -68,7 +60,7 @@ namespace SignPDF
 			//
 		}
 		
-		void LbDragDrop(object sender, DragEventArgs e)
+		private void LbDragDrop(object sender, DragEventArgs e)
 		{
 			string[] files = (string[])e.Data.GetData("FileDrop", false);
 			foreach (string s in files)

@@ -132,7 +132,10 @@ namespace SignPDF
             this.Password = cpassword;
             this.processCert();
 
-            if (tsaURL == null) this.tsc = null;
+            if (tsaURL == null)
+            {
+                this.tsc = null;
+            }
             else this.tsc = new TSAClientBouncyCastle(tsaURL, tsaLogin, tsaPwd);
         }
         #endregion

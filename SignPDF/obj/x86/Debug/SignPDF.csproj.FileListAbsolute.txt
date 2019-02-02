@@ -46,3 +46,16 @@ C:\Documents and Settings\glauco.rampogna\Documenti\Firma Digitale\SignPDF+TS\Si
 C:\Documents and Settings\glauco.rampogna\Documenti\Firma Digitale\SignPDF+TS\SignPDF\bin\Debug\itextsharp.xtra.dll
 C:\Documents and Settings\glauco.rampogna\Documenti\Firma Digitale\SignPDF+TS\SignPDF\bin\Debug\GhostscriptSharp.pdb
 C:\Documents and Settings\glauco.rampogna\Documenti\Firma Digitale\SignPDF+TS\SignPDF\obj\x86\Debug\SignPDF.pdb
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\obj\x86\Debug\SignPDF.csprojAssemblyReference.cache
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\obj\x86\Debug\SignPDF.MainForm.resources
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\obj\x86\Debug\SignPDF.PwdDialog.resources
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\obj\x86\Debug\SignPDF.csproj.GenerateResource.cache
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\obj\x86\Debug\SignPDF.csproj.CoreCompileInputs.cache
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\obj\x86\Debug\SignPDF.exe
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\obj\x86\Debug\SignPDF.pdb
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\bin\Debug\SignPDF.exe
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\bin\Debug\SignPDF.pdb
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\bin\Debug\itextsharp.dll
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\bin\Debug\itextsharp.xtra.dll
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\bin\Debug\GhostscriptSharp.pdb
+C:\Users\g\Source\Repos\random9\SignPDF\SignPDF\obj\x86\Debug\SignPDF.csproj.CopyComplete
