@@ -62,8 +62,14 @@ namespace SignPDF
             //First we'll read the certificate file
             Stream fs;
 
-            if (this.path != null) fs = new FileStream(this.Path, FileMode.Open, FileAccess.Read);
-            else fs = new MemoryStream(this.rawData);
+            if (this.path != null)
+            {
+                fs = new FileStream(this.Path, FileMode.Open, FileAccess.Read);
+            }
+            else
+            {
+                fs = new MemoryStream(this.rawData);
+            }
             pk12 = new Pkcs12Store(fs, this.password.ToCharArray());
 
             //then Iterate throught certificate entries to find the private key entry

@@ -29,10 +29,10 @@ namespace SignPDF
 	/// </summary>
 	class PDFSigner
 	{
-		private string inputPDF = "";
-		private string outputPDF = "";
-		private Cert myCert;
-		private MetaData metadata;
+		private readonly string inputPDF = "";
+		private readonly string outputPDF = "";
+		private readonly Cert myCert;
+		private readonly MetaData metadata;
 
 		public PDFSigner(string input, string output)
 		{
