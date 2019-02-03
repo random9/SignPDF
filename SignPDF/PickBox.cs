@@ -138,8 +138,10 @@ namespace SignPDF
 			sX + sW-hB, sX + sW / 2, sX+hB, sX+hB};
 		int[] arrPosY = new int[] {sY+hB, sY+hB, sY+hB, sY + sH / 2, sY + sH-hB,
 			sY + sH-hB, sY + sH-hB, sY + sH / 2};
-		for(int i=0; i<8; i++)
-			lbl[i].SetBounds(arrPosX[i], arrPosY[i], BOX_SIZE, BOX_SIZE);
+            for (int i = 0; i < 8; i++)
+            {
+                lbl[i].SetBounds(arrPosX[i], arrPosY[i], BOX_SIZE, BOX_SIZE);
+            }
 	}
 
 	/////////////////////////////////////////////////////////////////

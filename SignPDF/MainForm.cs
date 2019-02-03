@@ -153,8 +153,14 @@ namespace SignPDF
 						MessageBox.Show(ex.ToString());
 					}
 					if(File.Exists(file + ".p7m")) {
-						if(CONMARCA) MessageBox.Show("File Firmato e Marcato correttamente","Operazione Completata");
-						else MessageBox.Show("File firmato correttamente","Operazione Completata");
+                        if (CONMARCA)
+                        {
+                            MessageBox.Show("File Firmato e Marcato correttamente", "Operazione Completata");
+                        }
+                        else
+                        {
+                            MessageBox.Show("File firmato correttamente", "Operazione Completata");
+                        }
 					}
 				}
 				Environment.Exit(0);
@@ -168,19 +174,25 @@ namespace SignPDF
 			{
 				//just filename
 				string ext=s.Substring(1 + s.LastIndexOf(@"."));
-				//lb.Items.Add(s.Substring(1 + s.LastIndexOf(@".")));
-				if(ext=="pdf" || ext=="PDF")
-					if(!lb.Items.Contains((object)s))
-						lb.Items.Add(s);
+                //lb.Items.Add(s.Substring(1 + s.LastIndexOf(@".")));
+                if (ext == "pdf" || ext == "PDF")
+                    if (!lb.Items.Contains((object)s))
+                    {
+                        lb.Items.Add(s);
+                    }
 			}
 		}
 
 		void LbDragEnter(object sender, DragEventArgs e)
 		{
-			if (e.Data.GetDataPresent(DataFormats.FileDrop))
-				e.Effect = DragDropEffects.All;
-			else
-				e.Effect = DragDropEffects.None;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.All;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
 		}
 		public void SignDetached() {
 			if(lb.Items.Count>0) {
@@ -487,10 +499,14 @@ namespace SignPDF
 				{
 					//just filename
 					string ext=s.Substring(1 + s.LastIndexOf(@"."));
-					//lb.Items.Add(s.Substring(1 + s.LastIndexOf(@".")));
-					if(ext=="pdf" || ext=="PDF")
-						if(!lb.Items.Contains((object)s))
-							lb.Items.Add(s);
+                    //lb.Items.Add(s.Substring(1 + s.LastIndexOf(@".")));
+                    if (ext == "pdf" || ext == "PDF")
+                    {
+                        if (!lb.Items.Contains((object)s))
+                        {
+                            lb.Items.Add(s);
+                        }
+                    }
 				}
 			}
 		}
