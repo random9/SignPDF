@@ -82,13 +82,6 @@ namespace SignPDF
                 }
             }
 
-            //IEnumerator i = pk12.Aliases.GetEnumerator();
-            //while (i.MoveNext())
-            //{
-            //    alias = ((string)i.Current);
-            //    if (pk12.IsKeyEntry(alias))
-            //        break;
-            //}
             fs.Close();
 
             this.akp = pk12.GetKey(alias).Key;
@@ -99,8 +92,6 @@ namespace SignPDF
                 chain[k] = ce[k].Certificate;
             }
 
-            //this.tsc = new TSAClientBouncyCastle("http://www.ca-soft.com/request.aspx", TSA_ACCNT, TSA_PASSW);
-            //this.tsc = new TSAClientBouncyCastle("http://www.ca-soft.com/request.aspx");
         }
         #endregion
 

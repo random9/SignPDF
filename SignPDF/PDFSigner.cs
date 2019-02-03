@@ -83,8 +83,10 @@ namespace SignPDF
 				st = PdfStamper.CreateSignature(reader, fs, '\0', null, sigAP.Multi);
 			}
 
-			if (encrypt && Enc != null) Enc.Encrypt(st);
-			//st.SetEncryption(PdfWriter.STRENGTH128BITS, "user", "owner", PdfWriter.ALLOW_COPY);
+            if (encrypt && Enc != null)
+            {
+                Enc.Encrypt(st);
+            }
 
 			st.MoreInfo = this.metadata.getMetaData();
 			st.XmpMetadata = this.metadata.getStreamedMetaData();
@@ -182,8 +184,6 @@ namespace SignPDF
 			dic2.Put(PdfName.CONTENTS, new PdfString(paddedSig).SetHexWriting(true));
 			sap.Close(dic2);
 			
-			//////
-			//st.Close();
 		}
 		
 

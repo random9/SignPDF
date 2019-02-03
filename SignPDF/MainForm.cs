@@ -41,7 +41,7 @@ namespace SignPDF
 	/// </summary>
 	public partial class MainForm : Form
 	{
-		private PDFEncryption PDFEnc = new PDFEncryption();
+		//private PDFEncryption PDFEnc = new PDFEncryption();
 		private PdfReader reader;
 		private readonly PickBox pbox = new PickBox();
 		// Acrobat objects
@@ -49,7 +49,7 @@ namespace SignPDF
 		//Acrobat.CAcroPDPage pdfPage;
 		//Acrobat.CAcroRect pdfRect;
 		//Acrobat.CAcroPoint pdfPoint;
-		private readonly string SignLocation =Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF";
+		//private readonly string SignLocation =Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF";
 		private readonly string TmpLocation =Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF\\tmp";
 		
 		public MainForm()
@@ -88,6 +88,9 @@ namespace SignPDF
 						case DialogResult.Cancel:
 							Environment.Exit(0);
 							break;
+                        default:
+                            MessageBox.Show("Opzione inattesa");
+                            break;
                     }
 
                     if (ext == "p7m") {
@@ -194,6 +197,7 @@ namespace SignPDF
                 e.Effect = DragDropEffects.None;
             }
 		}
+ 
 		public void SignDetached() {
 			if(lb.Items.Count>0) {
 				try
@@ -216,7 +220,6 @@ namespace SignPDF
 						PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(NuovoFile, FileMode.Create), '\0', null, multiSigChkBx.Checked);
 						PdfSignatureAppearance sap = stp.SignatureAppearance;
 						
-						//string nPagine= (cbRagione.SelectedIndex==2) ? reader.NumberOfPages.ToString() : "";
 						string nPagine= reader.NumberOfPages.ToString();
 						sap.Reason = cbRagione.Text+nPagine;
 						sap.Contact = tbContatto.Text;
@@ -239,7 +242,6 @@ namespace SignPDF
 								iTextSharp.text.Rectangle rect = reader.GetPageSize(paginaScelta);
 								int w=Convert.ToInt32(rect.Width);
 								int h=Convert.ToInt32(rect.Height);
-								//MessageBox.Show(paginaScelta.ToString());
 								Pagina=paginaScelta;
 								/* istruzioni:
 								 *  0 Prima Pagina in Alto a Sinistra
@@ -393,57 +395,6 @@ namespace SignPDF
 				MessageBox.Show(ex.ToString());
 				return null;
 			}
-			/****
-			 * Le istruzioni che seguono non sono piu' utili da quando non si puo' piu' usare SHA1
-			 * 
-			 * cmsSigner.DigestAlgorithm = new Oid("2.16.840.1.101.3.4.2.1"); NON FUNZIONA!
-			 * 
-			//  Place message in a ContentInfo object.
-			//  This is required to build a SignedCms object.
-			ContentInfo contentInfo = new ContentInfo(msg);
-
-			//  Instantiate SignedCms object with the ContentInfo above.
-			//  Has default SubjectIdentifierType IssuerAndSerialNumber.
-			SignedCms signedCms = new SignedCms(contentInfo, detached);
-
-			//  Formulate a CmsSigner object for the signer.
-			CmsSigner cmsSigner = new CmsSigner(signerCert);
-
-			// Include the following line if the top certificate in the
-			// smartcard is not in the trusted list.
-			cmsSigner.IncludeOption = X509IncludeOption.EndCertOnly;
-			
-			//cmsSigner.DigestAlgorithm = new Oid("2.16.840.1.101.3.4.2.1"); //SHA256
-			//cmsSigner.DigestAlgorithm = new Oid("2.16.840.1.101.3.4.2.1"); //SHA256
-			//cmsSigner.DigestAlgorithm = new Oid("SHA256");
-			//MessageBox.Show(cmsSigner.DigestAlgorithm.Value.ToString());
-			//  Sign the CMS/PKCS #7 message. The second argument is
-			//  needed to ask for the pin.
-			signedCms.ComputeSignature(cmsSigner, false);
-			//  Encode the CMS/PKCS #7 message.
-			byte[] bb = signedCms.Encode();
-			//return bb here if no timestamp is to be applied
-			CmsSignedData sd = new CmsSignedData(bb);
-			SignerInformationStore signers = sd.GetSignerInfos();
-			byte[] signature = null;
-			SignerInformation signer = null;
-			foreach (SignerInformation signer_ in signers.GetSigners()) {
-				signer = signer_;
-				break;
-			}
-			
-			signature = signer.GetSignature();
-			if(UsaTSA) {
-				Org.BouncyCastle.Asn1.Cms.AttributeTable at = new Org.BouncyCastle.Asn1.Cms.AttributeTable(GetTimestamp(signature,TSAurl,TSAuser,TSApass));
-				signer = SignerInformation.ReplaceUnsignedAttributes(signer, at);
-				IList signerInfos = new ArrayList();
-				signerInfos.Add(signer);
-				sd = CmsSignedData.ReplaceSigners(sd, new SignerInformationStore(signerInfos));
-				bb = sd.GetEncoded();
-				return bb;
-			}
-			//Encode the CMS/PKCS #7 message.
-			return signedCms.Encode();*/
 		}
 
 		public static X509Certificate2 GetCertificate() {
@@ -466,11 +417,8 @@ namespace SignPDF
 			
 			byte[] tsImprint = PdfEncryption.DigestComputeHash("SHA256", signature);
 			
-			//ITSAClient tsc = new TSAClientBouncyCastle("http://10.0.0.245:8080/signserver/process?workerName=TimeStampSigner", null, null);
-			//MessageBox.Show(url+" "+user+" "+pass);
 			int size=6500;
 			ITSAClient tsc = new TSAClientBouncyCastle(url, user, pass, size, "SHA256");
-			//return tsc.GetTimeStampToken(null, tsImprint);
 			String ID_TIME_STAMP_TOKEN = "1.2.840.113549.1.9.16.2.14"; // RFC 3161 id-aa-timeStampToken
 
 			Asn1InputStream tempstream = new Asn1InputStream(new MemoryStream(tsc.GetTimeStampToken(tsImprint)));
@@ -499,7 +447,6 @@ namespace SignPDF
 				{
 					//just filename
 					string ext=s.Substring(1 + s.LastIndexOf(@"."));
-                    //lb.Items.Add(s.Substring(1 + s.LastIndexOf(@".")));
                     if (ext == "pdf" || ext == "PDF")
                     {
                         if (!lb.Items.Contains((object)s))
@@ -606,8 +553,6 @@ namespace SignPDF
 			} catch (Exception ex) {
 				MessageBox.Show(ex.Message,"Errore nella generazione dell'anteprima");
 			}
-			//for (var i = 1; i <= reader.NumberOfPages; i++)
-			//Assert.IsTrue(File.Exists(String.Format("output{0}.jpg", i)));
 
 			numberOfPagesUpDown.Maximum = reader.NumberOfPages;
             numberOfPagesUpDown.Minimum = 1;
@@ -625,44 +570,7 @@ namespace SignPDF
 
 		private void numberOfPagesUpDown_ValueChanged(object sender, EventArgs e)
 		{
-			//-----------------------------------------------
-			//PdfReader reader = new PdfReader(inputBox.Text);
-			//Document ddd = new Document();
-			//PdfWriter writer = PdfWriter.GetInstance(ddd, new FileStream("ciao.pdf",FileMode.Create));
-			//PdfImportedPage page = writer.GetImportedPage(reader, 1);
-			//iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(page);
-			//MessageBox.Show(image.ToString());
-			//iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance("c:\\temp\\test.png");
-
-			//Bitmap bmp = new Bitmap((int)img.Width, (int)img.Height, PixelFormat.Format24bppRgb);
-			//System.Drawing.Rectangle rect0 = new System.Drawing.Rectangle(0, 0, bmp.Width, bmp.Height);
-			//BitmapData bmpdat = bmp.LockBits(rect0, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-			//Marshal.Copy(img.RawData, 0, bmpdat.Scan0, img.RawData.Length);
-			//bmp.UnlockBits(bmpdat);
-			//bmp.Save("c:\\temp\\test2.png");
-			/*pdfDoc = (Acrobat.CAcroPDDoc) Microsoft.VisualBasic.Interaction.CreateObject("AcroExch.PDDoc", "");
-			pdfDoc.Open(inputBox.Text);
-			pdfPage = (Acrobat.CAcroPDPage)pdfDoc.AcquirePage(Convert.ToInt32(numberOfPagesUpDown.Value)-1);
-			pdfPoint = (Acrobat.CAcroPoint)pdfPage.GetSize();
-			pdfRect = (Acrobat.CAcroRect) Microsoft.VisualBasic.Interaction.CreateObject("AcroExch.Rect", "");
-
-			pdfRect.Left = 0;
-			pdfRect.right = pdfPoint.x;
-			pdfRect.Top = 0;
-			pdfRect.bottom = pdfPoint.y;
-			pdfPage.CopyToClipboard(pdfRect, 0, 0, 100);
-			 */
-			//IDataObject clipboardData = Clipboard.GetDataObject();
-			
-			//if (clipboardData.GetDataPresent(DataFormats.Bitmap))
-			//{
-			//Bitmap pdfBitmap = (Bitmap)clipboardData.GetData(DataFormats.Bitmap);
-			
-			//pdfDoc.Close();
-			//Marshal.ReleaseComObject(pdfPage);
-			//Marshal.ReleaseComObject(pdfRect);
-			//Marshal.ReleaseComObject(pdfDoc);
-			
+				
 			//-----------------------------------------------
 			iTextSharp.text.Rectangle rect = reader.GetPageSize(Convert.ToInt32(numberOfPagesUpDown.Value));
 
@@ -725,7 +633,8 @@ namespace SignPDF
 			if (openFile.ShowDialog() != DialogResult.OK)
 				return;
 
-			sigPicture.Image = sigImgBox.Image = new Bitmap(openFile.FileName);
+			sigPicture.Image = new Bitmap(openFile.FileName);
+            sigImgBox.Image = new Bitmap(openFile.FileName);
 		}
 
 		private void sigPictureResize(object sender, EventArgs e)
@@ -773,36 +682,7 @@ namespace SignPDF
 					string file=filePDF.Substring(1 + filePDF.LastIndexOf(@"\"));
 					string NuovoFile = filePDF.Substring(0, filePDF.LastIndexOf(@"\")+1)+file.Substring(0, file.LastIndexOf("."))+"_firmato.pdf";
 					PdfReader reader = new PdfReader(filePDF);
-					//------------------------------
-					/*if(cbPDFA.Checked) {
-						filePDF=SignLocation+"\\"+file;
-						Document doc = new Document(reader.GetPageSize(1));
-						PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(SignLocation+"\\"+file, FileMode.Create));
-						writer.PDFXConformance = PdfWriter.PDFA1B;
-						doc.Open();
-						PdfDictionary outi = new PdfDictionary(PdfName.OUTPUTINTENT);
-						outi.Put(PdfName.OUTPUTCONDITIONIDENTIFIER, new PdfString("sRGB IEC61966-2.1"));
-						outi.Put(PdfName.INFO, new PdfString("sRGB IEC61966-2.1"));
-						outi.Put(PdfName.S, PdfName.GTS_PDFA1);
-						if(!File.Exists(SignLocation+"\\srgb.profile")) {
-							MessageBox.Show("Manca il profilo SRGB nella cartella "+SignLocation);
-							return;
-						}
-						ICC_Profile icc = ICC_Profile.GetInstance(SignLocation+"\\srgb.profile");
-						PdfICCBased ib = new PdfICCBased(icc);
-						ib.Remove(PdfName.ALTERNATE);
-						outi.Put(PdfName.DESTOUTPUTPROFILE, writer.AddToBody(ib).IndirectReference);
-						writer.ExtraCatalog.Put(PdfName.OUTPUTINTENTS, new PdfArray(outi));
-						BaseFont bf = BaseFont.CreateFont("c:\\windows\\fonts\\arial.ttf", BaseFont.WINANSI, true);
-						Font f = new Font(bf, 12);
-						doc.Add(new Paragraph("hello", f));
-						writer.CreateXmpMetadata();
-						doc.Close();
-						
-					}
-					 */
-					//-------------------------------
-					//MessageBox.Show(file+" + "+NuovoFile);
+
 					
 					PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(NuovoFile, FileMode.Create), '\0', null, multiSigChkBx.Checked);
 					PdfSignatureAppearance sap = stp.SignatureAppearance;
@@ -950,12 +830,10 @@ namespace SignPDF
 					//just filename
 					try {
 						string ext=s.Substring(1 + s.LastIndexOf(@"."));
-						//lb.Items.Add(s.Substring(1 + s.LastIndexOf(@".")));
 						if(ext=="pdf" || ext=="PDF") {
 							//ricreo il percorso con il nome del nuovo file
 							string file=s.Substring(1 + s.LastIndexOf(@"\"));
 							string NuovoFile = s.Substring(0, s.LastIndexOf(@"\")+1)+file.Substring(0, file.LastIndexOf("."))+"_validato_"+DateTime.Now.ToFileTime()+".pdf";
-							//MessageBox.Show(NuovoFile);
 							PdfReader r = new PdfReader(s);
 							FileStream fout = new FileStream(NuovoFile, FileMode.Create);
 							PdfStamper stp = PdfStamper.CreateSignature(r, fout, '\0', null, true);
