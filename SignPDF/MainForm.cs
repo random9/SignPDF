@@ -155,10 +155,12 @@ namespace SignPDF
 				//just filename
 				string ext=s.Substring(1 + s.LastIndexOf(@"."));
                 if (ext == "pdf" || ext == "PDF")
+                {
                     if (!lb.Items.Contains((object)s))
                     {
                         lb.Items.Add(s);
                     }
+                }
 			}
 		}
 
@@ -185,41 +187,41 @@ namespace SignPDF
 					pb.Maximum=lb.Items.Count;
 					pb.Visible=true;
 
-					foreach(object oFile in lb.Items) {
-						string filePDF=oFile.ToString();
-						PdfReader reader = new PdfReader(filePDF);
-						int Pagina=1;
-						int posX=0,posY=0,Altezza=0,Larghezza=0;
-						//ricreo il percorso con il nome del nuovo file
-						string file=filePDF.Substring(1 + filePDF.LastIndexOf(@"\"));
-						string NuovoFile = filePDF.Substring(0, filePDF.LastIndexOf(@"\")+1)+file.Substring(0, file.LastIndexOf("."))+"_firmato.pdf";
-						PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(NuovoFile, FileMode.Create), '\0', null, multiSigChkBx.Checked);
-						PdfSignatureAppearance sap = stp.SignatureAppearance;
-						
-						string nPagine= reader.NumberOfPages.ToString();
-						sap.Reason = cbRagione.Text+nPagine;
-						sap.Contact = tbContatto.Text;
-						sap.Location = tbLuogo.Text;
-						if(cbFirmaVisibile.Checked==true) { //firma visibile
-							if(rbNuovaPagina.Checked) { //firma su nuova pagina
-								Pagina=reader.NumberOfPages+1;
-								stp.InsertPage(Pagina,reader.GetPageSize(1)); //new iTextSharp.text.Rectangle(600,800));
-								iTextSharp.text.Rectangle rect = reader.GetPageSize(Pagina);
-								int w=Convert.ToInt32(rect.Width);
-								int h=Convert.ToInt32(rect.Height);
-								posX=20;
-								posY=h-120;
-								Larghezza=posX+100;
-								Altezza=posY+100;
-							}
-							else if(rbVecchiaPagina.Checked) { //firma su pagina esistente
-								int IndiceScelto=lbPosizioneFirma.SelectedIndex;
-								int paginaScelta = (IndiceScelto<=3) ? 1 : reader.NumberOfPages;
-								iTextSharp.text.Rectangle rect = reader.GetPageSize(paginaScelta);
-								int w=Convert.ToInt32(rect.Width);
-								int h=Convert.ToInt32(rect.Height);
-								Pagina=paginaScelta;
-								/* istruzioni:
+                    foreach (object oFile in lb.Items) {
+                        string filePDF = oFile.ToString();
+                        PdfReader reader = new PdfReader(filePDF);
+                        int Pagina = 1;
+                        int posX = 0, posY = 0, Altezza = 0, Larghezza = 0;
+                        //ricreo il percorso con il nome del nuovo file
+                        string file = filePDF.Substring(1 + filePDF.LastIndexOf(@"\"));
+                        string NuovoFile = filePDF.Substring(0, filePDF.LastIndexOf(@"\") + 1) + file.Substring(0, file.LastIndexOf(".")) + "_firmato.pdf";
+                        PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(NuovoFile, FileMode.Create), '\0', null, multiSigChkBx.Checked);
+                        PdfSignatureAppearance sap = stp.SignatureAppearance;
+
+                        string nPagine = reader.NumberOfPages.ToString();
+                        sap.Reason = cbRagione.Text + nPagine;
+                        sap.Contact = tbContatto.Text;
+                        sap.Location = tbLuogo.Text;
+                        if (cbFirmaVisibile.Checked == true) { //firma visibile
+                            if (rbNuovaPagina.Checked) { //firma su nuova pagina
+                                Pagina = reader.NumberOfPages + 1;
+                                stp.InsertPage(Pagina, reader.GetPageSize(1)); //new iTextSharp.text.Rectangle(600,800));
+                                iTextSharp.text.Rectangle rect = reader.GetPageSize(Pagina);
+                                int w = Convert.ToInt32(rect.Width);
+                                int h = Convert.ToInt32(rect.Height);
+                                posX = 20;
+                                posY = h - 120;
+                                Larghezza = posX + 100;
+                                Altezza = posY + 100;
+                            }
+                            else if (rbVecchiaPagina.Checked) { //firma su pagina esistente
+                                int IndiceScelto = lbPosizioneFirma.SelectedIndex;
+                                int paginaScelta = (IndiceScelto <= 3) ? 1 : reader.NumberOfPages;
+                                iTextSharp.text.Rectangle rect = reader.GetPageSize(paginaScelta);
+                                int w = Convert.ToInt32(rect.Width);
+                                int h = Convert.ToInt32(rect.Height);
+                                Pagina = paginaScelta;
+                                /* istruzioni:
 								 *  0 Prima Pagina in Alto a Sinistra
 								 *  1 Prima Pagina in Alto a Destra
 								 *  2 Prima Pagina in Basso a Sinistra
@@ -229,57 +231,63 @@ namespace SignPDF
 								 *  6 Ultima Pagina in Basso a Sinistra
 								 *  7 Ultima Pagina in Basso a Destra
 								 */
-								switch(IndiceScelto) {
-									case 0:
+                                switch (IndiceScelto) {
+                                    case 0:
                                     default:
                                     case 4:
-										posX=20;
-										posY=h-110;
-										Larghezza=posX+100;
-										Altezza=posY+100;
-										break;
-									case 1:
-									case 5:
-										posX=w-110;
-										posY=h-110;
-										Larghezza=posX+100;
-										Altezza=posY+100;
-										break;
-									case 2:
-									case 6:
-										posX=20;
-										posY=20;
-										Larghezza=posX+350;
-										Altezza=posY+70;
-										break;
-									case 3:
-									case 7:
-										posX=w-110;
-										posY=20;
-										Larghezza=posX+100;
-										Altezza=posY+100;
-										break;
+                                        posX = 20;
+                                        posY = h - 110;
+                                        Larghezza = posX + 100;
+                                        Altezza = posY + 100;
+                                        break;
+                                    case 1:
+                                    case 5:
+                                        posX = w - 110;
+                                        posY = h - 110;
+                                        Larghezza = posX + 100;
+                                        Altezza = posY + 100;
+                                        break;
+                                    case 2:
+                                    case 6:
+                                        posX = 20;
+                                        posY = 20;
+                                        Larghezza = posX + 350;
+                                        Altezza = posY + 70;
+                                        break;
+                                    case 3:
+                                    case 7:
+                                        posX = w - 110;
+                                        posY = 20;
+                                        Larghezza = posX + 100;
+                                        Altezza = posY + 100;
+                                        break;
                                 }
-							}
-							sap.SetVisibleSignature(new iTextSharp.text.Rectangle(posX, posY, Larghezza, Altezza), Pagina, null);
-						}
-						sap.SignDate = DateTime.Now;
-						sap.SetCrypto(null, chain, null, null);
-						
-						sap.Acro6Layers = true;
-						sap.Render = PdfSignatureAppearance.SignatureRender.Description; //.NameAndDescription;
-						PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_DETACHED);
-						dic.Date = new PdfDate(sap.SignDate);
-						dic.Name = PdfPKCS7.GetSubjectFields(chain[0]).GetField("CN");
-						sap.Layer2Text = "Firmato Digitalmente da: "+PdfPKCS7.GetSubjectFields(chain[0]).GetField("CN");
-						sap.Layer2Text+="\r\nData: "+sap.SignDate;
-						sap.Layer2Text+="\r\nRagione: "+sap.Reason;
-						if (sap.Reason != null)
-							dic.Reason = sap.Reason;
-						if (sap.Location != null)
-							dic.Location = sap.Location;
-						if (sap.Contact != null)
-							dic.Contact = sap.Contact;
+                            }
+                            sap.SetVisibleSignature(new iTextSharp.text.Rectangle(posX, posY, Larghezza, Altezza), Pagina, null);
+                        }
+                        sap.SignDate = DateTime.Now;
+                        sap.SetCrypto(null, chain, null, null);
+
+                        sap.Acro6Layers = true;
+                        sap.Render = PdfSignatureAppearance.SignatureRender.Description; //.NameAndDescription;
+                        PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_DETACHED);
+                        dic.Date = new PdfDate(sap.SignDate);
+                        dic.Name = PdfPKCS7.GetSubjectFields(chain[0]).GetField("CN");
+                        sap.Layer2Text = "Firmato Digitalmente da: " + PdfPKCS7.GetSubjectFields(chain[0]).GetField("CN");
+                        sap.Layer2Text += "\r\nData: " + sap.SignDate;
+                        sap.Layer2Text += "\r\nRagione: " + sap.Reason;
+                        if (sap.Reason != null)
+                        { 
+                            dic.Reason = sap.Reason;
+                        }
+                        if (sap.Location != null)
+                        {
+                            dic.Location = sap.Location;
+                        }
+                        if (sap.Contact != null)
+                        {
+                            dic.Contact = sap.Contact;
+                        }
 						sap.CryptoDictionary = dic;
 						int contentEstimated = 56000;
 						Dictionary<PdfName, int> exc = new Dictionary<PdfName, int>();
@@ -290,7 +298,8 @@ namespace SignPDF
 						MemoryStream ss = new MemoryStream();
 						int read = 0;
 						byte[] buff = new byte[8192];
-						while ((read = s.Read(buff, 0, 8192)) > 0) {
+						while ((read = s.Read(buff, 0, 8192)) > 0)
+                        {
 							ss.Write(buff, 0, read);
 						}
 						byte[] pk;
