@@ -42,7 +42,7 @@ namespace SignPDF
 	public partial class MainForm : Form
 	{
 		private PDFEncryption PDFEnc = new PDFEncryption();
-		private PdfReader reader = null;
+		private PdfReader reader;
 		private readonly PickBox pbox = new PickBox();
 		// Acrobat objects
 		//Acrobat.CAcroPDDoc pdfDoc;
@@ -80,7 +80,6 @@ namespace SignPDF
 					switch(dialogResult)
 					{
 						case DialogResult.Yes:
-                        default:
 							CONMARCA=true;
 							break;
 						case DialogResult.No:
@@ -89,15 +88,12 @@ namespace SignPDF
 						case DialogResult.Cancel:
 							Environment.Exit(0);
 							break;
-					}
-					
-					switch(ext) {
-						case "p7m":
-							GiaFirmato=true;
-							break;
-						default:
+                    }
+
+                    if (ext == "p7m") {
+                        GiaFirmato = true;
+                    } else { 
 							GiaFirmato=false;
-							break;
 					}
 					/*switch(ext) {
 						case "pdf":
@@ -139,10 +135,14 @@ namespace SignPDF
 						if (card != null) {
 							byte[] Firmato = FirmaFileBouncy(file, card, GiaFirmato, CONMARCA, TSAURL, TSAUSER, TSAPASS, out Res);
 							if (string.IsNullOrEmpty(Res)) {
-								if(ext=="p7m")
-									File.WriteAllBytes(file, Firmato);
-								else
-									File.WriteAllBytes(file + ".p7m", Firmato);
+                                if (ext == "p7m")
+                                {
+                                    File.WriteAllBytes(file, Firmato);
+                                }
+                                else
+                                {
+                                    File.WriteAllBytes(file + ".p7m", Firmato);
+                                }
 							}
 							else {
 								throw new Exception(Res);
@@ -511,15 +511,17 @@ namespace SignPDF
 				lb.Items.Remove(lb.SelectedItem);
 		}
 
-		void LbKeyUp(object sender, KeyEventArgs e)
+        void LbKeyUp(object sender, KeyEventArgs e)
 		{
 			if(e.KeyCode==Keys.Delete) {
-				if(lb.SelectedItem!=null)
-					lb.Items.Remove(lb.SelectedItem);
+                if (lb.SelectedItem != null)
+                {
+                    lb.Items.Remove(lb.SelectedItem);
+                }
 			}
 		}
 
-		void CheckBox1CheckedChanged(object sender, EventArgs e)
+        void CheckBox1CheckedChanged(object sender, EventArgs e)
 		{
 			TopMost=(TopMost) ? false : true;
 		}
@@ -683,12 +685,12 @@ namespace SignPDF
 			decimal Y = sigPicture.Parent.Height - sigPicture.Top - sigPicture.Height;
 			Y =  Convert.ToInt32( (rect.Height * (float)Y) / pagePreviewPanel.Height );
 
-			if (X > sigPosX.Maximum) X = sigPosX.Maximum;
-			if (X < sigPosX.Minimum) X = sigPosX.Minimum;
-			if (Y > sigPosY.Maximum) Y = sigPosY.Maximum;
-			if (Y < sigPosY.Minimum) Y = sigPosY.Minimum;
+            if (X > sigPosX.Maximum) { X = sigPosX.Maximum; }
+			if (X < sigPosX.Minimum) { X = sigPosX.Minimum; }
+            if (Y > sigPosY.Maximum) { Y = sigPosY.Maximum; }
+            if (Y < sigPosY.Minimum) { Y = sigPosY.Minimum; }
 
-			sigPosX.Value = X;
+            sigPosX.Value = X;
 			sigPosY.Value = Y;
 		}
 
@@ -989,10 +991,14 @@ namespace SignPDF
 
 		void Lbp7mDragEnter(object sender, DragEventArgs e)
 		{
-			if (e.Data.GetDataPresent(DataFormats.FileDrop))
-				e.Effect = DragDropEffects.All;
-			else
-				e.Effect = DragDropEffects.None;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.All;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
 		}
 
 		public byte[] FirmaFileBouncy(string NomeFile, X509Certificate2 cert, bool GiaFirmato, bool UsaTSA, string TSAurl, string TSAuser, string TSApass, out string RisFirma)
