@@ -62,14 +62,8 @@ namespace SignPDF
             //First we'll read the certificate file
             Stream fs;
 
-            if (this.path != null)
-            {
-                fs = new FileStream(this.Path, FileMode.Open, FileAccess.Read);
-            }
-            else
-            {
-                fs = new MemoryStream(this.rawData);
-            }
+            if (this.path != null) fs = new FileStream(this.Path, FileMode.Open, FileAccess.Read);
+            else fs = new MemoryStream(this.rawData);
             pk12 = new Pkcs12Store(fs, this.password.ToCharArray());
 
             //then Iterate throught certificate entries to find the private key entry
@@ -95,9 +89,8 @@ namespace SignPDF
             X509CertificateEntry[] ce = pk12.GetCertificateChain(alias);
             this.chain = new Org.BouncyCastle.X509.X509Certificate[ce.Length];
             for (int k = 0; k < ce.Length; ++k)
-            {
                 chain[k] = ce[k].Certificate;
-            }
+
             //this.tsc = new TSAClientBouncyCastle("http://www.ca-soft.com/request.aspx", TSA_ACCNT, TSA_PASSW);
             //this.tsc = new TSAClientBouncyCastle("http://www.ca-soft.com/request.aspx");
         }
@@ -132,10 +125,7 @@ namespace SignPDF
             this.Password = cpassword;
             this.processCert();
 
-            if (tsaURL == null)
-            {
-                this.tsc = null;
-            }
+            if (tsaURL == null) this.tsc = null;
             else this.tsc = new TSAClientBouncyCastle(tsaURL, tsaLogin, tsaPwd);
         }
         #endregion

@@ -1,6 +1,5 @@
 ﻿/*
  * Creato da SharpDevelop.
- * Utente: glauco
  * Data: 05/01/2011
  * Ora: 16.23
  * 

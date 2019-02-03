@@ -108,6 +108,13 @@ namespace SignPDF
 			this.label28 = new System.Windows.Forms.Label();
 			this.numberOfPagesUpDown = new System.Windows.Forms.NumericUpDown();
 			this.SigVisible = new System.Windows.Forms.CheckBox();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.lb2 = new System.Windows.Forms.ListBox();
+			this.button4 = new System.Windows.Forms.Button();
+			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.button6 = new System.Windows.Forms.Button();
+			this.lbp7m = new System.Windows.Forms.ListBox();
+			this.button5 = new System.Windows.Forms.Button();
 			this.multiSigChkBx = new System.Windows.Forms.CheckBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.TSALbl3 = new System.Windows.Forms.Label();
@@ -118,6 +125,8 @@ namespace SignPDF
 			this.TSAUrlTextBox = new System.Windows.Forms.TextBox();
 			this.tsaCbx = new System.Windows.Forms.CheckBox();
 			this.ofd2 = new System.Windows.Forms.OpenFileDialog();
+			this.fbd = new System.Windows.Forms.FolderBrowserDialog();
+			this.ofd3 = new System.Windows.Forms.OpenFileDialog();
 			this.cm1.SuspendLayout();
 			this.gbFirma.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -136,6 +145,8 @@ namespace SignPDF
 			this.pagePreviewPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.sigPicture)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numberOfPagesUpDown)).BeginInit();
+			this.tabPage3.SuspendLayout();
+			this.tabPage4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -353,6 +364,8 @@ namespace SignPDF
 			// 
 			this.tabControl1.Controls.Add(this.tabPage2);
 			this.tabControl1.Controls.Add(this.tabPage1);
+			this.tabControl1.Controls.Add(this.tabPage3);
+			this.tabControl1.Controls.Add(this.tabPage4);
 			this.tabControl1.Location = new System.Drawing.Point(4, 5);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
@@ -646,7 +659,7 @@ namespace SignPDF
 			// 
 			// sigImgBox
 			// 
-			this.sigImgBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+			this.sigImgBox.BackColor = System.Drawing.Color.White;
 			this.sigImgBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.sigImgBox.Location = new System.Drawing.Point(8, 31);
 			this.sigImgBox.Name = "sigImgBox";
@@ -832,7 +845,7 @@ namespace SignPDF
 			// 
 			// sigPicture
 			// 
-			this.sigPicture.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+			this.sigPicture.BackColor = System.Drawing.Color.White;
 			this.sigPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.sigPicture.Location = new System.Drawing.Point(27, 38);
 			this.sigPicture.Name = "sigPicture";
@@ -876,6 +889,84 @@ namespace SignPDF
 			this.SigVisible.Text = "Firma visibile";
 			this.SigVisible.UseVisualStyleBackColor = true;
 			this.SigVisible.CheckedChanged += new System.EventHandler(this.SigVisibleCheckedChanged);
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.Controls.Add(this.lb2);
+			this.tabPage3.Controls.Add(this.button4);
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Size = new System.Drawing.Size(763, 436);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "Long Term Validation (Pades)";
+			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// lb2
+			// 
+			this.lb2.FormattingEnabled = true;
+			this.lb2.Location = new System.Drawing.Point(21, 115);
+			this.lb2.Name = "lb2";
+			this.lb2.ScrollAlwaysVisible = true;
+			this.lb2.Size = new System.Drawing.Size(714, 290);
+			this.lb2.TabIndex = 1;
+			// 
+			// button4
+			// 
+			this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.button4.Location = new System.Drawing.Point(247, 16);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(238, 81);
+			this.button4.TabIndex = 0;
+			this.button4.Text = "Seleziona cartella da validare";
+			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.Button4Click);
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.Controls.Add(this.button6);
+			this.tabPage4.Controls.Add(this.lbp7m);
+			this.tabPage4.Controls.Add(this.button5);
+			this.tabPage4.Location = new System.Drawing.Point(4, 22);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage4.Size = new System.Drawing.Size(763, 436);
+			this.tabPage4.TabIndex = 3;
+			this.tabPage4.Text = "P7M Multi";
+			this.tabPage4.UseVisualStyleBackColor = true;
+			// 
+			// button6
+			// 
+			this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.button6.Location = new System.Drawing.Point(6, 363);
+			this.button6.Name = "button6";
+			this.button6.Size = new System.Drawing.Size(152, 43);
+			this.button6.TabIndex = 2;
+			this.button6.Text = "FIRMA";
+			this.button6.UseVisualStyleBackColor = true;
+			this.button6.Click += new System.EventHandler(this.Button6Click);
+			// 
+			// lbp7m
+			// 
+			this.lbp7m.AllowDrop = true;
+			this.lbp7m.FormattingEnabled = true;
+			this.lbp7m.Location = new System.Drawing.Point(164, 7);
+			this.lbp7m.Name = "lbp7m";
+			this.lbp7m.Size = new System.Drawing.Size(593, 420);
+			this.lbp7m.TabIndex = 1;
+			this.lbp7m.DragDrop += new System.Windows.Forms.DragEventHandler(this.Lbp7mDragDrop);
+			this.lbp7m.DragEnter += new System.Windows.Forms.DragEventHandler(this.Lbp7mDragEnter);
+			this.lbp7m.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Lbp7mKeyUp);
+			// 
+			// button5
+			// 
+			this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.button5.Location = new System.Drawing.Point(3, 6);
+			this.button5.Name = "button5";
+			this.button5.Size = new System.Drawing.Size(155, 40);
+			this.button5.TabIndex = 0;
+			this.button5.Text = "Carica FILES";
+			this.button5.UseVisualStyleBackColor = true;
+			this.button5.Click += new System.EventHandler(this.Button5Click);
 			// 
 			// multiSigChkBx
 			// 
@@ -960,7 +1051,7 @@ namespace SignPDF
 			this.TSAUrlTextBox.Name = "TSAUrlTextBox";
 			this.TSAUrlTextBox.Size = new System.Drawing.Size(414, 20);
 			this.TSAUrlTextBox.TabIndex = 29;
-			this.TSAUrlTextBox.Text = "http://10.0.0.245:8080/signserver/process?workerName=TimeStampSigner";
+			this.TSAUrlTextBox.Text = "http://10.0.0.245/";
 			// 
 			// tsaCbx
 			// 
@@ -976,6 +1067,11 @@ namespace SignPDF
 			// ofd2
 			// 
 			this.ofd2.FileName = "*.pdf";
+			// 
+			// ofd3
+			// 
+			this.ofd3.Filter = "Tutti files (*.*)|*.*";
+			this.ofd3.Multiselect = true;
 			// 
 			// MainForm
 			// 
@@ -1017,11 +1113,22 @@ namespace SignPDF
 			this.pagePreviewPanel.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.sigPicture)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numberOfPagesUpDown)).EndInit();
+			this.tabPage3.ResumeLayout(false);
+			this.tabPage4.ResumeLayout(false);
 			this.groupBox5.ResumeLayout(false);
 			this.groupBox5.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.OpenFileDialog ofd3;
+		private System.Windows.Forms.Button button5;
+		private System.Windows.Forms.ListBox lbp7m;
+		private System.Windows.Forms.Button button6;
+		private System.Windows.Forms.TabPage tabPage4;
+		private System.Windows.Forms.ListBox lb2;
+		private System.Windows.Forms.FolderBrowserDialog fbd;
+		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.TabPage tabPage3;
 		private System.Windows.Forms.CheckBox cbPDFA;
 		private System.Windows.Forms.ComboBox cbRagioneSingolo;
 		private System.Windows.Forms.Button button3;
