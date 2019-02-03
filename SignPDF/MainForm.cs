@@ -80,6 +80,7 @@ namespace SignPDF
 					switch(dialogResult)
 					{
 						case DialogResult.Yes:
+                        default:
 							CONMARCA=true;
 							break;
 						case DialogResult.No:

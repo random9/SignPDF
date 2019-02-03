@@ -24,8 +24,12 @@ namespace SignPDF
         public string UserPwd { get; set; }
         public string OwnerPwd { get; set; }
         public bool Encryption { get; set; }
-        public List<permissionType> Permissions = new List<permissionType>();
-
+        private List<permissionType> permissions = new List<permissionType>();
+        public List<permissionType> Permissions
+        {
+            get { return permissions; }
+            set { permissions = value; }
+        }
         public PDFEncryption()
         {
         }

@@ -62,7 +62,7 @@ namespace SignPDF
 	// that attaches a pick box to the control when it is clicked
 	//
 	public void WireControl(Control ctl) {
-		//ctl.Click += new EventHandler(this.SelectControl);
+		ctl.Click += new EventHandler(this.SelectControl);
 	}
 
 
@@ -172,6 +172,7 @@ namespace SignPDF
         int h = m_control.Height;
 		if (dragging) {
 		switch (((Label)sender).TabIndex) {
+            default:
 			case 0: // Dragging top-left sizing box
 				l = startl + e.X < startl + startw - MIN_SIZE ? startl + e.X : startl + startw - MIN_SIZE;
 				t = startt + e.Y < startt + starth - MIN_SIZE ? startt + e.Y : startt + starth - MIN_SIZE;
@@ -206,9 +207,6 @@ namespace SignPDF
 				l = startl + e.X < startl + startw - MIN_SIZE ? startl + e.X : startl + startw - MIN_SIZE;
                 w = startl + startw - m_control.Left;
 				break;
-            default:
-                break;
-
 		   }
         l =(l<0)?0:l;
         t =(t<0)?0:t;
