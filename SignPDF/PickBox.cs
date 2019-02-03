@@ -15,10 +15,10 @@ namespace SignPDF
 	//////////////////////////////////////////////////////////////////
 
 	private const int BOX_SIZE = 8;
-	private Color BOX_COLOR = Color.White;
+	private readonly Color BOX_COLOR = Color.White;
 	//private ContainerControl m_container;
     private Control m_control;
-	private Label[] lbl = new Label[8];
+	private readonly Label[] lbl = new Label[8];
 	private int startl;
     private int startt;
 	private int startw;
@@ -26,7 +26,7 @@ namespace SignPDF
 	private int startx;
     private int starty;
 	private bool dragging;
-	private	Cursor[] arrArrow = new Cursor[] {Cursors.SizeNWSE, Cursors.SizeNS,
+	private readonly	Cursor[] arrArrow = new Cursor[] {Cursors.SizeNWSE, Cursors.SizeNS,
 			Cursors.SizeNESW, Cursors.SizeWE, Cursors.SizeNWSE, Cursors.SizeNS,
 			Cursors.SizeNESW, Cursors.SizeWE};
 	private Cursor oldCursor;

@@ -659,7 +659,7 @@ namespace SignPDF
 					//ricreo il percorso con il nome del novo file
 					
 					string file=filePDF.Substring(1 + filePDF.LastIndexOf(@"\"));
-					string NuovoFile = filePDF.Substring(0, filePDF.LastIndexOf(@"\")+1)+file.Substring(0, file.LastIndexOf("."))+"_firmato.pdf";
+					string NuovoFile = filePDF.Substring(0, filePDF.LastIndexOf(@"\")+1)+file.Substring(0, file.LastIndexOf("."))+"_firmato.pdf".ToLowerInvariant();
 					PdfReader reader = new PdfReader(filePDF);
 
 					
@@ -700,13 +700,19 @@ namespace SignPDF
 					PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_DETACHED);
 					dic.Date = new PdfDate(sap.SignDate);
 					dic.Name = PdfPKCS7.GetSubjectFields(chain[0]).GetField("CN");
-					
-					if (sap.Reason != null)
-						dic.Reason = sap.Reason;
-					if (sap.Location != null)
-						dic.Location = sap.Location;
-					if (sap.Contact != null)
-						dic.Contact = sap.Contact;
+
+                    if (sap.Reason != null)
+                    {
+                        dic.Reason = sap.Reason;
+                    }
+                    if (sap.Location != null)
+                    {
+                        dic.Location = sap.Location;
+                    }
+                    if (sap.Contact != null)
+                    {
+                        dic.Contact = sap.Contact;
+                    }
 					sap.CryptoDictionary = dic;
 					int contentEstimated = 15000;
 					Dictionary<PdfName, int> exc = new Dictionary<PdfName, int>();
@@ -808,7 +814,7 @@ namespace SignPDF
 				{
 					//just filename
 					try {
-						string ext=s.Substring(1 + s.LastIndexOf(@"."));
+						string ext=s.Substring(1 + s.LastIndexOf(@".")).ToLowerInvariant();
 						if(ext=="pdf" || ext=="PDF") {
 							//ricreo il percorso con il nome del nuovo file
 							string file=s.Substring(1 + s.LastIndexOf(@"\"));
