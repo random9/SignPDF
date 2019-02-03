@@ -614,8 +614,10 @@ namespace SignPDF
 			openFile = new System.Windows.Forms.OpenFileDialog();
 			openFile.Filter = "File jpeg (*.jpg) |*.jpg| File gif (*.gif) |*.gif| File bmp (*.bmp)|*.bmp| File png (*.png)| *.png";
 			openFile.Title = "Select a file";
-			if (openFile.ShowDialog() != DialogResult.OK)
-				return;
+            if (openFile.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
 
 			sigPicture.Image = new Bitmap(openFile.FileName);
             sigImgBox.Image = new Bitmap(openFile.FileName);
@@ -627,10 +629,10 @@ namespace SignPDF
 			decimal W = Convert.ToInt32((rect.Width * sigPicture.Width) / pagePreviewPanel.Width);
 			decimal H = Convert.ToInt32((rect.Height * sigPicture.Height) / pagePreviewPanel.Height);
 			
-			if (W > sigWidth.Maximum) W = sigWidth.Maximum;
-			if (W < sigWidth.Minimum) W = sigWidth.Minimum;
-			if (H > sigHeight.Maximum) H = sigHeight.Maximum;
-			if (H < sigHeight.Minimum) H = sigHeight.Minimum;
+			if (W > sigWidth.Maximum) { W = sigWidth.Maximum; }
+            if (W < sigWidth.Minimum) { W = sigWidth.Minimum; }
+            if (H > sigHeight.Maximum) { H = sigHeight.Maximum; }
+            if (H < sigHeight.Minimum) { H = sigHeight.Minimum; }
 
 			sigWidth.Value = W;
 			sigHeight.Value = H;
@@ -666,7 +668,7 @@ namespace SignPDF
 					
 					//ricreo il percorso con il nome del novo file
 					
-					string file=filePDF.Substring(1 + filePDF.LastIndexOf(@"\"));
+					string file=filePDF.Substring(1 + filePDF.LastIndexOf(@"\")).ToLowerInvariant();
 					string NuovoFile = filePDF.Substring(0, filePDF.LastIndexOf(@"\")+1)+file.Substring(0, file.LastIndexOf("."))+"_firmato.pdf".ToLowerInvariant();
 					PdfReader reader = new PdfReader(filePDF);
 
