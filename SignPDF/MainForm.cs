@@ -205,7 +205,7 @@ namespace SignPDF
                         if (cbFirmaVisibile.Checked == true) { //firma visibile
                             if (rbNuovaPagina.Checked) { //firma su nuova pagina
                                 Pagina = reader.NumberOfPages + 1;
-                                stp.InsertPage(Pagina, reader.GetPageSize(1)); //new iTextSharp.text.Rectangle(600,800));
+                                stp.InsertPage(Pagina, reader.GetPageSize(1));
                                 iTextSharp.text.Rectangle rect = reader.GetPageSize(Pagina);
                                 int w = Convert.ToInt32(rect.Width);
                                 int h = Convert.ToInt32(rect.Height);
@@ -583,7 +583,6 @@ namespace SignPDF
 
 			sigWidth.Maximum = Convert.ToInt32(rect.Width);
 			sigHeight.Maximum = Convert.ToInt32(rect.Height);
-			//}
 		}
 
 		private void sigPictureMove(object sender, EventArgs e)
@@ -697,10 +696,7 @@ namespace SignPDF
 						                        Convert.ToInt32(numberOfPagesUpDown.Value),
 						                        null);
 					}
-					/*if(custSigText.!=null) {
-						sap.Layer2Text = custSigText.Text;
-					}*/
-					
+				
 					sap.SignDate = DateTime.Now;
 					sap.SetCrypto(null, chain, null, null);
 					
@@ -776,7 +772,6 @@ namespace SignPDF
 					//TEST TIMESTAMP CON BOUNCYCASTLE
 					//-------------------------------------------------------------------
 					
-					//byte[] test = PdfPKCS7.GetAuthenticatedAttributeBytes(hash, cal, ocsp);
 					//===================================QUI FIRMO
 					byte[] pk;
 					if(tsaCbx.Checked) {
