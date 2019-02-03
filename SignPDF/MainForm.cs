@@ -32,7 +32,6 @@ using Org.BouncyCastle.Tsp;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Cms;
 using Org.BouncyCastle.Asn1.Ess;
-//using System.Runtime.InteropServices;
 using GhostscriptSharp;
 namespace SignPDF
 {
@@ -41,32 +40,18 @@ namespace SignPDF
 	/// </summary>
 	public partial class MainForm : Form
 	{
-		//private PDFEncryption PDFEnc = new PDFEncryption();
+		
 		private PdfReader reader;
 		private readonly PickBox pbox = new PickBox();
-		// Acrobat objects
-		//Acrobat.CAcroPDDoc pdfDoc;
-		//Acrobat.CAcroPDPage pdfPage;
-		//Acrobat.CAcroRect pdfRect;
-		//Acrobat.CAcroPoint pdfPoint;
-		//private readonly string SignLocation =Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF";
-		private readonly string TmpLocation =Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF\\tmp";
+        private readonly string TmpLocation =Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF\\tmp";
 		
 		public MainForm()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
+
 			CheckCommandLine();
 			InitializeComponent();
 			pbox.WireControl(sigPicture);
 			lbPosizioneFirma.SelectedIndex=2;
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			// Verificare se il pdf e' gia stato firmato
-			// Verificare il formato delle pagine
-			// verificare se e' cifrato
-			//
 		}
 		
 		void CheckCommandLine() {
@@ -98,14 +83,6 @@ namespace SignPDF
                     } else { 
 							GiaFirmato=false;
 					}
-					/*switch(ext) {
-						case "pdf":
-							CONMARCA=true;
-							break;
-						case "p7m":
-							CONMARCA=false;
-							break;
-					}*/
 					
 					try	{
 						//il certificato per firmare
@@ -177,7 +154,6 @@ namespace SignPDF
 			{
 				//just filename
 				string ext=s.Substring(1 + s.LastIndexOf(@"."));
-                //lb.Items.Add(s.Substring(1 + s.LastIndexOf(@".")));
                 if (ext == "pdf" || ext == "PDF")
                     if (!lb.Items.Contains((object)s))
                     {
@@ -654,7 +630,10 @@ namespace SignPDF
 
 		void SigVisibleCheckedChanged(object sender, EventArgs e)
 		{
-			sigPanel1.Visible = sigPanel2.Visible = sigPanel1.Enabled = sigPanel2.Enabled = SigVisible.Checked;
+			sigPanel1.Visible = SigVisible.Checked;
+            sigPanel2.Visible = SigVisible.Checked;
+            sigPanel1.Enabled = SigVisible.Checked;
+            sigPanel2.Enabled = SigVisible.Checked;
 		}
 
 		private void tsaCbx_CheckedChanged(object sender, EventArgs e)
