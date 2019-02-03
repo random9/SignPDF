@@ -30,16 +30,13 @@ namespace SignPDF
             get { return permissions; }
             set { permissions = value; }
         }
-        public PDFEncryption()
-        {
-        }
 
         public void Encrypt(PdfStamper stamper)
         {
             int permission = 0;
-            foreach (int permissionType in this.Permissions)
+            foreach (permissionType i in this.Permissions)
             {
-                permission |= (int)permissionType;
+                permission |= (int)i;
             }
             stamper.SetEncryption(this.Encryption, this.UserPwd, this.OwnerPwd, permission);
         }

@@ -60,7 +60,7 @@ namespace SignPDF
 			this.metadata = md;
 		}
 
-		public void Verify()
+		public static void Verify()
 		{
             throw new NotSupportedException();
 		}

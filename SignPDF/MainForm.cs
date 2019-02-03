@@ -43,14 +43,14 @@ namespace SignPDF
 	{
 		private PDFEncryption PDFEnc = new PDFEncryption();
 		private PdfReader reader = null;
-		private PickBox pbox = new PickBox();
+		private readonly PickBox pbox = new PickBox();
 		// Acrobat objects
 		//Acrobat.CAcroPDDoc pdfDoc;
 		//Acrobat.CAcroPDPage pdfPage;
 		//Acrobat.CAcroRect pdfRect;
 		//Acrobat.CAcroPoint pdfPoint;
-		private string SignLocation=Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF";
-		private string TmpLocation=Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF\\tmp";
+		private readonly string SignLocation =Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF";
+		private readonly string TmpLocation =Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+"\\.SignPDF\\tmp";
 		
 		public MainForm()
 		{
@@ -572,18 +572,16 @@ namespace SignPDF
 			if(!Directory.Exists(TmpLocation)) {
 				Directory.CreateDirectory(TmpLocation);
 			} else {
-				for(int i=1;;i++) {
-					if(File.Exists(TmpLocation+"\\output"+i+".jpg")) {
+                int i = 1;
+					while(File.Exists(TmpLocation+"\\output"+i+".jpg")) {
 						try {
 							File.Delete(TmpLocation+"\\output"+i+".jpg");
 						} catch (Exception ex) {
 							MessageBox.Show(ex.Message, "Errore nel cancellare i files temporanei");
 						}
+                        i++;
 					}
-					else {
-						break;
-					}
-				}
+				
 			}
 			try {
 				GhostscriptWrapper.GeneratePageThumbs(openFile.FileName, MULTIPLE_FILE_LOCATION, 1, reader.NumberOfPages, 20, 20);
