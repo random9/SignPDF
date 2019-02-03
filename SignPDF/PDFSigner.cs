@@ -62,6 +62,7 @@ namespace SignPDF
 
 		public void Verify()
 		{
+            throw new NotSupportedException();
 		}
 
 
@@ -144,8 +145,10 @@ namespace SignPDF
 			if (this.myCert.Chain.Length >= 2)
 			{
 				String url = PdfPKCS7.GetOCSPURL(this.myCert.Chain[0]);
-				if (url != null && url.Length > 0)
-					ocsp = new OcspClientBouncyCastle().GetEncoded(this.myCert.Chain[0], this.myCert.Chain[1], url);
+                if (url != null && url.Length > 0)
+                {
+                    ocsp = new OcspClientBouncyCastle().GetEncoded(this.myCert.Chain[0], this.myCert.Chain[1], url);
+                }
 			}
 			byte[] sh = sgn.GetAuthenticatedAttributeBytes(hash, cal, ocsp);
 			sgn.Update(sh, 0, sh.Length);
@@ -158,15 +161,19 @@ namespace SignPDF
 			{
 				byte[] encodedSigTsa = sgn.GetEncodedPKCS7(hash, cal, this.myCert.Tsc, ocsp);
 				System.Array.Copy(encodedSigTsa, 0, paddedSig, 0, encodedSigTsa.Length);
-				if (contentEstimated + 2 < encodedSigTsa.Length)
-					throw new Exception("Not enough space for signature");
+                if (contentEstimated + 2 < encodedSigTsa.Length)
+                {
+                    throw new ArgumentNullException("Not enough space for signature");
+                }
 			}
 			else
 			{
 				byte[] encodedSig = sgn.GetEncodedPKCS7(hash, cal);
 				System.Array.Copy(encodedSig, 0, paddedSig, 0, encodedSig.Length);
-				if (contentEstimated + 2 < encodedSig.Length)
-					throw new Exception("Not enough space for signature");
+                if (contentEstimated + 2 < encodedSig.Length)
+                {
+                    throw new ArgumentNullException("Not enough space for signature");
+                }
 			}
 			
 

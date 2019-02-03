@@ -33,9 +33,9 @@ namespace SignPDF
         public void Encrypt(PdfStamper stamper)
         {
             int permission = 0;
-            foreach (int i in this.Permissions)
+            foreach (int permissionType in this.Permissions)
             {
-                permission |= (int)i;
+                permission |= (int)permissionType;
             }
             stamper.SetEncryption(this.Encryption, this.UserPwd, this.OwnerPwd, permission);
         }

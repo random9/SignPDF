@@ -62,7 +62,7 @@ namespace SignPDF
 	// that attaches a pick box to the control when it is clicked
 	//
 	public void WireControl(Control ctl) {
-		ctl.Click += new EventHandler(this.SelectControl);
+		//ctl.Click += new EventHandler(this.SelectControl);
 	}
 
 
@@ -206,6 +206,9 @@ namespace SignPDF
 				l = startl + e.X < startl + startw - MIN_SIZE ? startl + e.X : startl + startw - MIN_SIZE;
                 w = startl + startw - m_control.Left;
 				break;
+            default:
+                break;
+
 		   }
         l =(l<0)?0:l;
         t =(t<0)?0:t;

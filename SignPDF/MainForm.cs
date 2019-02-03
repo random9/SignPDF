@@ -240,7 +240,8 @@ namespace SignPDF
 								 */
 								switch(IndiceScelto) {
 									case 0:
-									case 4:
+                                    default:
+                                    case 4:
 										posX=20;
 										posY=h-110;
 										Larghezza=posX+100;
@@ -267,7 +268,7 @@ namespace SignPDF
 										Larghezza=posX+100;
 										Altezza=posY+100;
 										break;
-								}
+                                }
 							}
 							sap.SetVisibleSignature(new iTextSharp.text.Rectangle(posX, posY, Larghezza, Altezza), Pagina, null);
 						}
@@ -592,7 +593,8 @@ namespace SignPDF
 			//Assert.IsTrue(File.Exists(String.Format("output{0}.jpg", i)));
 
 			numberOfPagesUpDown.Maximum = reader.NumberOfPages;
-			numberOfPagesUpDown.Minimum = numberOfPagesUpDown.Value = 1;
+            numberOfPagesUpDown.Minimum = 1;
+            numberOfPagesUpDown.Value = 1;
 			numberOfPagesUpDown_ValueChanged(numberOfPagesUpDown, null);
 
 			sigPicture.Left = 0;
@@ -693,7 +695,8 @@ namespace SignPDF
 
 		private void clearBtn_Click(object sender, EventArgs e)
 		{
-			sigPicture.Image = sigImgBox.Image = null;
+            sigPicture.Image = null;
+            sigImgBox.Image = null;
 		}
 
 		private void browseBtn_Click(object sender, EventArgs e)

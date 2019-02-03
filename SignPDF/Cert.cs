@@ -15,9 +15,9 @@ namespace SignPDF
     {
         #region Attributes
 
-        private string path = null;
-        private byte[] rawData = null;
-        private string password = "";
+        private readonly string path = null;
+        private readonly byte[] rawData = null;
+        private readonly string password = "";
         private AsymmetricKeyParameter akp;
         private Org.BouncyCastle.X509.X509Certificate[] chain;
 
@@ -89,7 +89,9 @@ namespace SignPDF
             X509CertificateEntry[] ce = pk12.GetCertificateChain(alias);
             this.chain = new Org.BouncyCastle.X509.X509Certificate[ce.Length];
             for (int k = 0; k < ce.Length; ++k)
+            {
                 chain[k] = ce[k].Certificate;
+            }
 
             //this.tsc = new TSAClientBouncyCastle("http://www.ca-soft.com/request.aspx", TSA_ACCNT, TSA_PASSW);
             //this.tsc = new TSAClientBouncyCastle("http://www.ca-soft.com/request.aspx");
@@ -125,8 +127,14 @@ namespace SignPDF
             this.Password = cpassword;
             this.processCert();
 
-            if (tsaURL == null) this.tsc = null;
-            else this.tsc = new TSAClientBouncyCastle(tsaURL, tsaLogin, tsaPwd);
+            if (tsaURL == null)
+            {
+                this.tsc = null;
+            }
+            else
+            {
+                this.tsc = new TSAClientBouncyCastle(tsaURL, tsaLogin, tsaPwd);
+            }
         }
         #endregion
 

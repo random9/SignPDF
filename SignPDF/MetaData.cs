@@ -23,7 +23,10 @@ namespace SignPDF
         {
             get
             {
-                if (!info.ContainsKey("Author")) return String.Empty;
+                if (!info.ContainsKey("Author"))
+                {
+                    return String.Empty;
+                }
 
                 return info["Author"];
             }
@@ -33,7 +36,10 @@ namespace SignPDF
         {
             get
             {
-                if (!info.ContainsKey("Title")) return String.Empty;
+                if (!info.ContainsKey("Title"))
+                {
+                    return String.Empty;
+                }
 
                 return info["Title"];
             }
@@ -43,7 +49,10 @@ namespace SignPDF
         {
             get
             {
-                if (!info.ContainsKey("Subject")) return String.Empty;
+                if (!info.ContainsKey("Subject"))
+                {
+                    return String.Empty;
+                }
                 return info["Subject"];
             }
             set { info.Add("Subject", value); }
@@ -52,7 +61,10 @@ namespace SignPDF
         {
             get
             {
-                if (!info.ContainsKey("Keywords")) return String.Empty;
+                if (!info.ContainsKey("Keywords"))
+                {
+                    return String.Empty;
+                }
 
                 return info["Keywords"];
             }
@@ -62,7 +74,10 @@ namespace SignPDF
         {
             get
             {
-                if (!info.ContainsKey("Producer")) return String.Empty;
+                if (!info.ContainsKey("Producer"))
+                {
+                    return String.Empty;
+                }
                 return info["Producer"];
             }
             set { info.Add("Producer", value); }
@@ -72,7 +87,10 @@ namespace SignPDF
         {
             get
             {
-                if (!info.ContainsKey("Creator")) return String.Empty;
+                if (!info.ContainsKey("Creator"))
+                {
+                    return String.Empty;
+                }
 
                 return info["Creator"];
             }
